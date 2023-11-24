@@ -1,0 +1,32 @@
+
+import java.math.BigInteger;
+        import java.util.Scanner;
+
+public class karrr {
+    public static BigInteger customRecursiveMultiply(BigInteger x, BigInteger y) {
+        if (x.compareTo(BigInteger.TEN) < 0 || y.compareTo(BigInteger.TEN) < 0) {
+            return x.multiply(y);
+        }
+        int length = Math.max(x.toString().length(), y.toString().length());
+        BigInteger power = BigInteger.TEN.pow(length / 2);
+        BigInteger ar = x.mod(power);
+        BigInteger al = x.divide(power);
+        BigInteger br = y.mod(power);
+        BigInteger bl = y.divide(power);
+        BigInteger albl = customRecursiveMultiply(al, bl);
+        BigInteger arbr = customRecursiveMultiply(ar, br);
+        BigInteger middle = customRecursiveMultiply(al.add(ar), bl.add(br)).subtract(albl)
+                .subtract(arbr);
+        return albl.multiply(power.pow(2)).add(middle.multiply(power)).add(arbr);
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter the number: ");
+        BigInteger x = scanner.nextBigInteger();
+        BigInteger y = x;
+        BigInteger result = customRecursiveMultiply(x, y);
+        System.out.println("The result is: " + result);
+        scanner.close();
+    }
+}

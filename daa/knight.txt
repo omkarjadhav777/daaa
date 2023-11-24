@@ -1,0 +1,60 @@
+
+import java.util.Scanner;
+
+public class knight3 {
+    public knight3() {
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("enter for chess board: ");
+        int n = sc.nextInt();
+        System.out.println("enter starting point row");
+        int r = sc.nextInt();
+        System.out.println("enter starting point col");
+        int c = sc.nextInt();
+        int[][] chess = new int[n][n];
+        boolean[] found = new boolean[]{false};
+        printknighttour(chess, r, c, 1, found);
+        if (!found[0]) {
+            System.out.println("No solution is possible.");
+        }
+
+    }
+
+    public static void printknighttour(int[][] chess, int r, int c, int move, boolean[] found) {
+        if (!found[0]) {
+            if (r >= 0 && c >= 0 && r < chess.length && c < chess[0].length && chess[r][c] <= 0) {
+                if (move == chess.length * chess[0].length) {
+                    chess[r][c] = move;
+                    displayboard(chess);
+                    chess[r][c] = 0;
+                    found[0] = true;
+                } else {
+                    chess[r][c] = move;
+                    printknighttour(chess, r - 2, c + 1, move + 1, found);
+                    printknighttour(chess, r - 1, c + 2, move + 1, found);
+                    printknighttour(chess, r + 1, c + 2, move + 1, found);
+                    printknighttour(chess, r + 2, c + 1, move + 1, found);
+                    printknighttour(chess, r + 2, c - 1, move + 1, found);
+                    printknighttour(chess, r + 1, c - 2, move + 1, found);
+                    printknighttour(chess, r - 1, c - 2, move + 1, found);
+                    printknighttour(chess, r - 2, c - 1, move + 1, found);
+                    chess[r][c] = 0;
+                }
+            }
+        }
+    }
+
+    public static void displayboard(int[][] chess) {
+        for(int i = 0; i < chess.length; ++i) {
+            for(int j = 0; j < chess[0].length; ++j) {
+                System.out.print(chess[i][j] + " ");
+            }
+
+            System.out.println();
+        }
+
+        System.out.println();
+    }
+}

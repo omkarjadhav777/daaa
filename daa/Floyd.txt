@@ -1,0 +1,57 @@
+
+import java.util.Scanner;
+import java.util.*;
+
+public class flowd {
+
+    final static int INF = 99999;
+    static void solutoin(int[][] dist,int V)
+    {
+        for(int k=0;k<V;k++){
+            for(int i=0;i<V;i++ ){
+                for (int j = 0; j < V; j++) {
+                   dist[i][j]=Math.min(dist[i][j],dist[i][k]+dist[k][j]);
+                }
+            }
+        }
+    }
+    public static void main(String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter the no of offices: ");
+        int V = sc.nextInt();
+
+        int dist[][] = new int[V][V];
+
+        System.out.println("Enter the cost of connection between offices(Enter 99999 if no cost is known): ");
+
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+
+                if(i == j) {
+                    continue;
+                }
+                System.out.print("Enter the cost to leash lines between office "+(i+1)+" and "+(j+1)+" :");
+                dist[i][j] =sc.nextInt();
+                System.out.println(" ");
+            }
+        }
+
+
+        solutoin(dist, V);
+
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+
+                if(i == j) {
+                    continue;
+                }
+                if(dist[i][j] != INF){
+                    System.out.println("The cost to leash lines between office "+(i+1)+" and "+(j+1)+" : " + dist[i][j]);
+                }
+
+            }
+        }
+
+    }
+}
